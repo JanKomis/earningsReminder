@@ -11,15 +11,15 @@ const links = [
   },
   {
     name: "Stocks",
-    path: "/stocks",
+    path: "/dashboard/stocks",
   },
   {
     name: "Option chain",
-    path: "/option-chain",
+    path: "/dashboard/option-chain",
   },
   {
     name: "Settings",
-    path: "/settings",
+    path: "/dashboard/settings",
   },
 ];
 
@@ -27,18 +27,19 @@ export default function NavLinks() {
   const pathName = usePathname();
 
   return (
-    <nav className="space-x-1">
+    <nav className="flex flex-col gap-2 justify-between">
       {links.map((link) => (
-        <Link
-          key={link.name}
-          href={link.path}
-          className={clsx(
-            "text-sm font-medium text-primary hover:bg-accent py-2 px-4 rounded-full",
-            { "bg-accent": pathName === link.path }
-          )}
-        >
-          {link.name}
-        </Link>
+        <Button asChild key={link.name} variant="ghost">
+          <Link
+            href={link.path}
+            className={clsx({
+              "bg-accent": pathName === link.path,
+              "bg-red-500": link.path === "/dashboard/settings",
+            })}
+          >
+            {link.name}
+          </Link>
+        </Button>
       ))}
     </nav>
   );

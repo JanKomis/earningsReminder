@@ -13,9 +13,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      <div><Sidebar /></div>
-      <div>{children}</div>
+    <div className="flex">
+      <Sidebar />
+      {children}
     </div>
   );
 }
