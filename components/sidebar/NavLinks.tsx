@@ -23,11 +23,16 @@ const links = [
   },
 ];
 
+const settingsLink = {
+  name: "Settings",
+  path: "/dashboard/settings",
+};
+
 export default function NavLinks() {
   const pathName = usePathname();
 
   return (
-    <nav className="flex flex-col gap-2 justify-between">
+    <nav className="flex flex-col gap-2">
       {links.map((link) => (
         <Button asChild key={link.name} variant="ghost">
           <Link

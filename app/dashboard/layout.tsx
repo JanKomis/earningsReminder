@@ -13,7 +13,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex">
+    <div className="flex flex-1">
       <Sidebar />
       {children}
     </div>
