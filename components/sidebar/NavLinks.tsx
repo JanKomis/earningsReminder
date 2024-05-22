@@ -10,8 +10,8 @@ const links = [
     path: "/dashboard",
   },
   {
-    name: "Stocks",
-    path: "/dashboard/stocks",
+    name: "Screener",
+    path: "/dashboard/screener",
   },
   {
     name: "Option chain",

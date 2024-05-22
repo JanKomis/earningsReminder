@@ -1,4 +1,3 @@
-
 import Sidebar from "@/components/sidebar/Sidebar";
 import type { Metadata } from "next";
 
@@ -13,9 +12,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-1">
+    <div className="flex">
       <Sidebar />
-      {children}
+      <div>{children}</div>
     </div>
   );
 }
