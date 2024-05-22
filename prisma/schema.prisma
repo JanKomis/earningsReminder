@@ -65,51 +65,32 @@ model VerificationToken {
 }
 
 model Stock {
-  id            String @id @default(cuid())
-  ticker        String @unique
-  updatedAt      DateTime   @updatedAt
-  expirationDay String
-  region String
-  name String
-  openHour String
-  closeHour String
-  earningsDate
-  earningsEnd
-  earningsStart
-  dividendDate ???
-  marketCap
-  priceLow7
-  priceRange7
-  rangeMedian7
-  averageVolume7
-  priceLow30
-  priceRange30
-  rangeMedian30
-  averageVolume30
+  id            String   @id @default(cuid())
+  ticker        String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  expirationDay String //????????????
+  exchange      String //name of exchange
+  name          String //name of stock
+  earningsDate  DateTime //exact date of earnings
+  earningsStart DateTime //the range of when earnings will be announced
+  earningsEnd   DateTime //the range of when earnings will be announced
 
+  dividendDate DateTime? //if stock pays dividends
+  marketCap    Int
 
+  priceEOD  Float //end of day price
+  volumeEOD Int //end of day volume 
 
-}
+  priceLow7         Float //min. price during 7 days
+  priceRange7       Float //range between min and max. price during 7 days
+  percPriceRange7   Float //(priceRange7 / 2)/((priceLow7 +(priceRange7 / 2))*0.01)
+  dailyRangeMedian7 Float //median calculated from the price range (daily low and hight) during 7 days
+  volumeMedian7     Int //median calculated from the volume during 7 days
 
-model Option {
-  id             String     @id @default(cuid())
-  optionSlug     String     @unique
-  type           OptionType
-  position       Position
-  trade          Trade
-  model          Model      @default(Black_Scholes)
-  strategyId     String
-  spotPrice      Float
-  strikePrice    Float
-  expiration     Int
-  volatility     Float
-  interestRate   Float
-  dividend       Float      @default(0)     
-  strikeInterval Float
-  openPrice      Float
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
-  strategy       Strategy   @relation(fields: [strategyId], references: [id], onDelete: Cascade)
-
-  @@map("options")
+  priceLow30         Float //min. price during 30 days
+  priceRange30       Float //range between min and max. price during 30 days
+  percPriceRange30   Float //(priceRange30 / 2)/((priceLow30 +(priceRange30 / 2))*0.01)
+  dailyRangeMedian30 Float //median calculated from the daily price range during 30 days
+  volumeMedian30     Float //median calculated from the volume during 30 days
 }
