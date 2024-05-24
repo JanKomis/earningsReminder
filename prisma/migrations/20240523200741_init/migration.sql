@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Stock" ALTER COLUMN "earningsDate" DROP NOT NULL,
+ALTER COLUMN "earningsEnd" DROP NOT NULL,
+ALTER COLUMN "earningsStart" DROP NOT NULL;

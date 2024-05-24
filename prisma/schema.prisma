@@ -65,32 +65,40 @@ model VerificationToken {
 }
 
 model Stock {
-  id            String   @id @default(cuid())
-  ticker        String   @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  expirationDay String //????????????
-  exchange      String //name of exchange
-  name          String //name of stock
-  earningsDate  DateTime //exact date of earnings
-  earningsStart DateTime //the range of when earnings will be announced
-  earningsEnd   DateTime //the range of when earnings will be announced
+  id               String    @id @default(cuid())
+  ticker           String    @unique
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  expirationDay    String //when weekly options expiry
+  exchange         String //name of exchange
+  exchangeTimezone String //timezone exchange
+  name             String //name of stock
+  earningsDate     DateTime? //exact date of earnings
+  earningsStart    DateTime? //the range of when earnings will be announced
+  earningsEnd      DateTime? //the range of when earnings will be announced
+  dividendDate     DateTime? //if stock pays dividends
+  marketCap        BigInt  
+  priceEOD         Float //end of day price
+  volumeEOD        Int //end of day volume 
 
-  dividendDate DateTime? //if stock pays dividends
-  marketCap    Int
+  calculateParams CalculateParams[]
+}
 
-  priceEOD  Float //end of day price
-  volumeEOD Int //end of day volume 
+model CalculateParams {
+  id                  String @id @default(cuid())
+  stockId             String
+  duration            Int
+  lowPrice            Float //lowest price in the period
+  range               Float //the difference between the max and min price in that period
+  rangePercent        Float //half range vs stock price in percent
+  aritMeanDailyRange  Float //aritmetic mean of daily range
+  varianceDailyRange  Float //variance mean of daily range
+  meanDevDailyRange   Float //mean deviation of daily range
+  coefVarDailyRange   Float //coefficient of variationn of daily range
+  aritMeanDailyVolume Float //aritmetic mean of daily volume
+  varianceDailyVolume Float //variance mean of daily volume
+  meanDevDailyVolume  Float //mean deviation of daily volume
+  coefVarDailyVolume  Float //coefficient of variationn of daily volume
 
-  priceLow7         Float //min. price during 7 days
-  priceRange7       Float //range between min and max. price during 7 days
-  percPriceRange7   Float //(priceRange7 / 2)/((priceLow7 +(priceRange7 / 2))*0.01)
-  dailyRangeMedian7 Float //median calculated from the price range (daily low and hight) during 7 days
-  volumeMedian7     Int //median calculated from the volume during 7 days
-
-  priceLow30         Float //min. price during 30 days
-  priceRange30       Float //range between min and max. price during 30 days
-  percPriceRange30   Float //(priceRange30 / 2)/((priceLow30 +(priceRange30 / 2))*0.01)
-  dailyRangeMedian30 Float //median calculated from the daily price range during 30 days
-  volumeMedian30     Float //median calculated from the volume during 30 days
+  stock Stock @relation(fields: [stockId], references: [id], onDelete: Cascade) // relation to Stock
 }

@@ -1,4 +1,4 @@
-/*
+
 const weeklyStockOptions = [
   { ticker: "AA", expirationDay: "FRI" },
   { ticker: "AAL", expirationDay: "FRI" },
@@ -522,17 +522,11 @@ const weeklyStockOptions = [
   { ticker: "ZM", expirationDay: "FRI" },
   { ticker: "ZS", expirationDay: "FRI" },
 ];
-*/
 
+/*
 const weeklyStockOptions = [
   { ticker: "AA", expirationDay: "FRI" },
   { ticker: "AAL", expirationDay: "FRI" },
-  { ticker: "AAOI", expirationDay: "FRI" },
-  { ticker: "AAP", expirationDay: "FRI" },
-  { ticker: "AAPL", expirationDay: "FRI" },
-  { ticker: "ABBV", expirationDay: "FRI" },
-  { ticker: "ABNB", expirationDay: "FRI" },
-  { ticker: "ABR", expirationDay: "FRI" },
 ];
-
+*/
 module.exports = { weeklyStockOptions };
