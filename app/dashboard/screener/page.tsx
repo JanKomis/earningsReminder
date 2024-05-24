@@ -1,50 +1,25 @@
 import { DataTable } from "@/components/screener/DataTable";
-import WebSocketComponent from "@/components/screener/WebSocketComponent";
-import { columns } from "@/components/screener/columns";
+import { AllStock } from "@/lib/query";
 
-const data = [
-  {
-    id: "0323215f",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    id: "090290cb",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    id: "c7243b42",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    id: "80b8d97c",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-  {
-    id: "255e56e0",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com",
-  },
-];
+//import { columns } from "@/components/screener/columns";
 
-export default function Page() {
+export default async function Page() {
+  const data = await AllStock();
+  console.log(data[1])
+  console.log('nasrat')
+
+
   return (
     <>
       <header className="w-full">
         <h1>Stock screener</h1>
       </header>
-      <main>
-        <DataTable columns={columns} data={data} />
-        <WebSocketComponent/>
-      </main>
+      <main></main>
     </>
   );
 }
+
+/*
+<DataTable columns={columns} data={data} />
+        <WebSocketComponent/>
+        */

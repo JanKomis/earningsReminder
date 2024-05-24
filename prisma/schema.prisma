@@ -102,3 +102,4 @@ model CalculateParams {
 
   stock Stock @relation(fields: [stockId], references: [id], onDelete: Cascade) // relation to Stock
 }
+
