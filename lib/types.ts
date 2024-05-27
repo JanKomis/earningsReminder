@@ -23,7 +23,7 @@ export type Stock = {
   calculateParams: CalculateParams[];
 };
 
-type CalculateParams = {
+export type CalculateParams = {
   id: string;
   stockId: string;
   duration: number;
