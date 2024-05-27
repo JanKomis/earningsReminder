@@ -33,6 +33,7 @@ async function calculateData(ticker, duration) {
 
   const response = await yahooFinance2.chart(query, queryOptions);
   const historyData = response.quotes;
+  console.log(ticker, historyData)
 
   const lows = historyData.map((q) => q.low);
   const highs = historyData.map((q) => q.high);
@@ -64,19 +65,23 @@ async function calculateData(ticker, duration) {
   const stdDevVolume = math.std(volumes);
   const coeffVarVolume = (stdDevVolume / meanVolume) * 100;
 
+  function roundTwoDec(num) {
+    return parseFloat(num.toFixed(2));
+  }
+
   const calculatedData2 = {
     duration: duration,
-    lowPrice: minPrice,
-    range: range,
-    rangePercent: percentageRange,
-    aritMeanDailyRange: meanRange,
-    varianceDailyRange: varianceRange,
-    meanDevDailyRange: stdDevRange,
-    coefVarDailyRange: coeffVarRange,
-    aritMeanDailyVolume: meanVolume,
-    varianceDailyVolume: varianceVolume,
-    meanDevDailyVolume: stdDevVolume,
-    coefVarDailyVolume: coeffVarVolume,
+    lowPrice: roundTwoDec(minPrice),
+    range: roundTwoDec(range),
+    rangePercent: roundTwoDec(percentageRange),
+    aritMeanDailyRange: roundTwoDec(meanRange),
+    varianceDailyRange: roundTwoDec(varianceRange),
+    meanDevDailyRange: roundTwoDec(stdDevRange),
+    coefVarDailyRange: roundTwoDec(coeffVarRange),
+    aritMeanDailyVolume: roundTwoDec(meanVolume),
+    varianceDailyVolume: roundTwoDec(varianceVolume),
+    meanDevDailyVolume: roundTwoDec(stdDevVolume),
+    coefVarDailyVolume: roundTwoDec(coeffVarVolume),
   };
 
   return calculatedData2;
