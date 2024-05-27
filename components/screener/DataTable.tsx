@@ -22,6 +22,7 @@ import {
 import React from "react";
 import { Button } from "../ui/button";
 import { DataTablePagination } from "./DataTablePagination";
+import { DataTableToolbar } from "./DataTableToolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,6 +48,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
+      <DataTableToolbar table={table} />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
