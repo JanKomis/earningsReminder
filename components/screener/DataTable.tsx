@@ -23,6 +23,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableToolbar } from "./DataTableToolbar";
+import { DataTableViewOptions } from "./DataTableViewOptions";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,6 +35,8 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
+
   const table = useReactTable({
     data,
     columns,
@@ -44,11 +47,20 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
     },
+    // Přidáno: Inicializace viditelnosti sloupců
+    initialState: {
+      columnVisibility: columns.reduce((acc, column) => {
+        acc[column.id] = column.groups === "basic";
+        return acc;
+      }, {}),
+    },
   });
 
   return (
     <div>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar table={table}>
+        <DataTableViewOptions table={table} />
+      </DataTableToolbar>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
