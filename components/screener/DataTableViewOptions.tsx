@@ -2,47 +2,45 @@ import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { useState } from "react";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
+export function DataTableViewOptions<TData>({
+  table,
+}: DataTableViewOptionsProps<TData>) {
+  const groups = table.getState().groups;
 
-export function DataTableViewOptions<TData>({ table }) {
-  const columns = table.getAllColumns();
+  const handleGroupVisibilityChange = (value) => {
+    const updatedGroups = groups.map((group) =>
+      group.id === value
+        ? { ...group, visible: true }
+        : { ...group, visible: false }
+    );
 
-  const uniqueGroups = [
-    ...new Set(columns.map((column) => column.columnDef.groups)),
-  ];
-
-  // Přidáno: Stav pro sledování viditelnosti skupin
-  const [groupVisibility, setGroupVisibility] = useState(
-    uniqueGroups.reduce((acc, group) => {
-      acc[group] = group === "basic";
+    const groupVisibilityMap = updatedGroups.reduce((acc, group) => {
+      acc[group.id] = group.visible;
       return acc;
-    }, {})
-  );
+    }, {});
 
-  
-  const handleGroupVisibilityChange = (group) => {
-    setGroupVisibility((prev) => ({
-      ...prev,
-      [group]: !prev[group],
-    }));
-    
-    columns.forEach((column) => {
-      if (column.columnDef.groups === group) {
-        column.toggleVisibility(!groupVisibility[group]);
-      }
-    });
+    const result = table.getAllColumns().reduce((acc, column) => {
+      const group = column.columnDef.groups;
+      const isVisible = groupVisibilityMap[group];
+      acc[column.id] = isVisible;
+      return acc;
+    }, {});
+
+    table.options.onGroupsChange(updatedGroups);
+    table.options.onColumnVisibilityChange(result);
   };
+
+  const selectedGroup = groups.find((group) => group.visible).id;
 
   return (
     <DropdownMenu>
@@ -57,16 +55,16 @@ export function DataTableViewOptions<TData>({ table }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-        {uniqueGroups.map((group) => (
-          <DropdownMenuCheckboxItem
-            key={group}
-            checked={groupVisibility[group]} // Přidáno: Stav viditelnosti skupin
-            onCheckedChange={() => handleGroupVisibilityChange(group)} // Přidáno: Zpracování změny viditelnosti
-          >
-            {group}
-          </DropdownMenuCheckboxItem>
-        ))}
+        <DropdownMenuRadioGroup
+          value={selectedGroup}
+          onValueChange={handleGroupVisibilityChange}
+        >
+          {groups.map((group) => (
+            <DropdownMenuRadioItem key={group.id} value={group.id}>
+              {group.name}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

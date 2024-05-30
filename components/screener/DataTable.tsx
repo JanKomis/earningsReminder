@@ -19,8 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import React from "react";
-import { Button } from "../ui/button";
+import { useState } from "react";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableToolbar } from "./DataTableToolbar";
 import { DataTableViewOptions } from "./DataTableViewOptions";
@@ -30,36 +29,58 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
+const initGroups = [
+  { id: "basic", name: "Basic stats", visible: true },
+  { id: "statistic7", name: "Statistics data 7D", visible: false },
+  { id: "statistic30", name: "Statistics data 30D", visible: false },
+];
+
 export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [groups, setGroups] = useState(initGroups);
 
+  const groupVisibilityMap = initGroups.reduce((acc, group) => {
+    acc[group.id] = group.visible;
+    return acc;
+  }, {});
+
+  // Vytvoření objektu s accessorKey a jejich viditelností
+  const accessorVisibilityObject = columns.reduce((acc, column) => {
+    const group = column.groups;
+    const accessorKey = column.accessorKey;
+
+    acc[accessorKey] = groupVisibilityMap[group] || false;
+    return acc;
+  }, {});
+
+  const [columnVisibility, setColumnVisibility] = useState(
+    accessorVisibilityObject
+  );
 
   const table = useReactTable({
     data,
     columns,
+    initGroups,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnVisibility,
+      groups,
     },
-    // Přidáno: Inicializace viditelnosti sloupců
-    initialState: {
-      columnVisibility: columns.reduce((acc, column) => {
-        acc[column.id] = column.groups === "basic";
-        return acc;
-      }, {}),
-    },
+    onColumnVisibilityChange: setColumnVisibility,
+    onGroupsChange: setGroups,
   });
 
   return (
     <div>
       <DataTableToolbar table={table}>
-        <DataTableViewOptions table={table} />
+        <DataTableViewOptions table={table}></DataTableViewOptions>
       </DataTableToolbar>
       <div className="rounded-md border">
         <Table>
