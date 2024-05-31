@@ -8,6 +8,8 @@ import {
   getSortedRowModel,
   getPaginationRowModel,
   useReactTable,
+  getFilteredRowModel,
+  ColumnFiltersState,
 } from "@tanstack/react-table";
 
 import {
@@ -41,13 +43,15 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [groups, setGroups] = useState(initGroups);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
+    []
+  );
 
   const groupVisibilityMap = initGroups.reduce((acc, group) => {
     acc[group.id] = group.visible;
     return acc;
   }, {});
 
-  
   const accessorVisibilityObject = columns.reduce((acc, column) => {
     const group = column.groups;
     const accessorKey = column.accessorKey;
@@ -55,7 +59,6 @@ export function DataTable<TData, TValue>({
     acc[accessorKey] = groupVisibilityMap[group];
     return acc;
   }, {});
-
 
   const [columnVisibility, setColumnVisibility] = useState(
     accessorVisibilityObject
@@ -69,10 +72,13 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
       columnVisibility,
       groups,
+      columnFilters,
     },
     onColumnVisibilityChange: setColumnVisibility,
     onGroupsChange: setGroups,
