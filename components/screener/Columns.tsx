@@ -3,11 +3,24 @@
 import { Stock } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import SortingButton from "./SortingButton";
+import { DataTableRowActions } from "./DataTableRowActions";
+import Link from "next/link";
+import { Button } from "../ui/button";
+
 
 export const columns: ColumnDef<Stock>[] = [
   {
     accessorKey: "ticker",
     header: ({ column }) => <SortingButton column={column} label="Ticker" />,
+    cell: ({ getValue }) => {
+      const value = getValue();
+      return (
+        <Button variant="link">
+          <Link href={`/dashboard/ticker/${value}`}>{value}</Link>
+        </Button>
+      );
+    },
+
     groups: [],
   },
   {
