@@ -3,7 +3,6 @@
 import { Stock } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import SortingButton from "./SortingButton";
-import { DataTableRowActions } from "./DataTableRowActions";
 import Link from "next/link";
 import { Button } from "../ui/button";
 
