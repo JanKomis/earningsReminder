@@ -47,14 +47,15 @@ export function DataTable<TData, TValue>({
     return acc;
   }, {});
 
-  // Vytvoření objektu s accessorKey a jejich viditelností
+  
   const accessorVisibilityObject = columns.reduce((acc, column) => {
     const group = column.groups;
     const accessorKey = column.accessorKey;
 
-    acc[accessorKey] = groupVisibilityMap[group] || false;
+    acc[accessorKey] = groupVisibilityMap[group];
     return acc;
   }, {});
+
 
   const [columnVisibility, setColumnVisibility] = useState(
     accessorVisibilityObject

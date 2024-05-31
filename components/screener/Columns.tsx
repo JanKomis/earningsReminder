@@ -8,40 +8,40 @@ export const columns: ColumnDef<Stock>[] = [
   {
     accessorKey: "ticker",
     header: ({ column }) => <SortingButton column={column} label="Ticker" />,
-    groups: "basic",
+    groups: [],
   },
   {
     accessorKey: "name",
     header: ({ column }) => <SortingButton column={column} label="Name" />,
-    groups: "basic",
+    groups: ["basic"],
   },
   {
     accessorKey: "earningsDate",
     header: ({ column }) => <SortingButton column={column} label="Earnings" />,
-    groups: "basic",
+    groups: ["basic"],
   },
   {
     accessorKey: "marketCap",
     header: ({ column }) => (
       <SortingButton column={column} label="Market cap" />
     ),
-    groups: "basic",
+    groups: ["basic"],
   },
   {
     accessorKey: "priceEOD",
     header: ({ column }) => <SortingButton column={column} label="Price" />,
-    groups: "basic",
+    groups: ["basic"],
   },
   {
     accessorKey: "volumeEOD",
     header: ({ column }) => <SortingButton column={column} label="Volume" />,
-    groups: "basic",
+    groups: ["basic"],
   },
   {
     accessorKey: "range",
     accessorFn: (row) => row.calculateParams[0].range,
     header: ({ column }) => <SortingButton column={column} label="Range 7D" />,
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "rangePercent",
@@ -49,7 +49,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="Perc. range 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "aritMeanDailyRange",
@@ -57,7 +57,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="AM daily range 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "meanDevDailyRange",
@@ -65,7 +65,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="MD daily range 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "coefVarDailyRange",
@@ -73,7 +73,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="CV daily range 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "aritMeanDailyVolume",
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="AM daily volume 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "meanDevDailyVolume",
@@ -89,7 +89,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="MD daily volume 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "coefVarDailyVolume",
@@ -97,13 +97,13 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="CV daily volume 7D" />
     ),
-    groups: "statistic7",
+    groups: ["statistic7"],
   },
   {
     accessorKey: "range30D",
     accessorFn: (row) => row.calculateParams[1].range,
     header: ({ column }) => <SortingButton column={column} label="Range 30D" />,
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "rangePercent30D",
@@ -111,7 +111,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="Perc. range 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "aritMeanDailyRange30D",
@@ -119,7 +119,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="AM daily range 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "meanDevDailyRange30D",
@@ -127,7 +127,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="MD daily range 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "coefVarDailyRange30D",
@@ -135,7 +135,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="CV daily range 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "aritMeanDailyVolume30D",
@@ -143,7 +143,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="AM daily volume 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "meanDevDailyVolume30D",
@@ -151,7 +151,7 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="MD daily volume 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
   {
     accessorKey: "coefVarDailyVolume30D",
@@ -159,6 +159,6 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => (
       <SortingButton column={column} label="CV daily volume 30D" />
     ),
-    groups: "statistic30",
+    groups: ["statistic30"],
   },
 ];
