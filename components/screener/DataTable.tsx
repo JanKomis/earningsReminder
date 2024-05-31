@@ -43,9 +43,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [groups, setGroups] = useState(initGroups);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const groupVisibilityMap = initGroups.reduce((acc, group) => {
     acc[group.id] = group.visible;
@@ -86,9 +84,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <DataTableToolbar table={table}>
-        <DataTableViewOptions table={table}></DataTableViewOptions>
-      </DataTableToolbar>
+      <DataTableToolbar table={table}></DataTableToolbar>
       <div className="rounded-md border">
         <Table>
           <TableHeader>
