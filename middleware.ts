@@ -5,6 +5,7 @@ const { auth } = NextAuth(authConfig);
 
 const privateRoute = "/dashboard";
 const authRoute = "/signin";
+const homeRoute = "/";
 
 export default auth((req) => {
   const isLoggedIn = !!req.auth;
@@ -13,12 +14,17 @@ export default auth((req) => {
   //const isAuthRoute = authRoute.includes(nextPath.pathname);
   const isAuthRoute = nextPath.pathname.startsWith(authRoute);
   const isPrivateRoute = nextPath.pathname.startsWith(privateRoute);
+  const isHomeRoute = nextPath.pathname === homeRoute;
 
   if (isAuthRoute) {
     if (isLoggedIn) {
       return NextResponse.redirect(new URL("/dashboard", nextPath));
     }
     null;
+  }
+
+  if (isHomeRoute && isLoggedIn) {
+    return NextResponse.redirect(new URL(privateRoute, nextPath));
   }
 
   if (!isLoggedIn && isPrivateRoute) {
