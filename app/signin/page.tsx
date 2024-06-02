@@ -1,6 +1,7 @@
 import { auth, signIn } from "@/auth";
 import { providerMap } from "@/auth.config";
 
+
 export default async function SignInPage() {
   return (
     <div className="flex flex-col gap-2">
