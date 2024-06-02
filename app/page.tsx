@@ -44,11 +44,10 @@ export default async function Home() {
         />
       </main>
       <footer className="text-right py-4">
-        <p className="">
+        <p className="text-2xl">
           ©2024 by <b>Jan Komiš</b>
         </p>
       </footer>
     </div>
   );
 }
-
