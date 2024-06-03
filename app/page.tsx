@@ -1,11 +1,5 @@
-import { auth } from "@/auth";
 import ContentBox from "@/components/homepage/ContentBox";
-import { HomePageCarousel } from "@/components/homepage/HomePageCarousel";
-import { StockCarousel } from "@/components/homepage/StockCarousel";
 
-import { Button } from "@/components/ui/button";
-
-import Image from "next/image";
 
 export default async function Home() {
   return (
