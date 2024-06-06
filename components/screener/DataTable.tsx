@@ -44,6 +44,7 @@ export function DataTable<TData, TValue>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [groups, setGroups] = useState(initGroups);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const groupVisibilityMap = initGroups.reduce((acc, group) => {
     acc[group.id] = group.visible;
@@ -77,9 +78,11 @@ export function DataTable<TData, TValue>({
       columnVisibility,
       groups,
       columnFilters,
+      rowSelection,
     },
     onColumnVisibilityChange: setColumnVisibility,
     onGroupsChange: setGroups,
+    onRowSelectionChange: setRowSelection,
   });
 
   return (
@@ -134,6 +137,10 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex-1 text-sm text-muted-foreground">
+        {table.getFilteredSelectedRowModel().rows.length} of{" "}
+        {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
       <DataTablePagination table={table} />
     </div>

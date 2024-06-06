@@ -1,3 +1,10 @@
 export default function Page() {
-    return <main>Welcome to dashboard!</main>;
-  }
+  return (
+    <>
+      <header>
+        <h1>Stock overview</h1>
+      </header>
+      <main>Welcome to dashboard!</main>
+    </>
+  );
+}

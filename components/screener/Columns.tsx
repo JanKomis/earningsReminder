@@ -1,25 +1,51 @@
 "use client";
-
+import { BookmarkIcon } from "@radix-ui/react-icons";
+import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { Stock } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import SortingButton from "./SortingButton";
-import Link from "next/link";
 import { Button } from "../ui/button";
-
+import { Checkbox } from "../ui/checkbox";
 
 export const columns: ColumnDef<Stock>[] = [
   {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+    groups: [],
+  },
+  {
     accessorKey: "ticker",
     header: ({ column }) => <SortingButton column={column} label="Ticker" />,
-    cell: ({ getValue }) => {
-      const value = getValue();
+    groups: [],
+  },
+  {
+    accessorKey: "watchlist",
+    header: ({ column }) => <SortingButton column={column} label="Watchlist" />,
+    cell: ({ row }) => {
       return (
-        <Button variant="link">
-          <Link href={`/dashboard/ticker/${value}`}>{value}</Link>
+        <Button variant="outline" size="icon">
+          <BookmarkIcon className="h-4 w-4" />
         </Button>
       );
     },
-
     groups: [],
   },
   {
