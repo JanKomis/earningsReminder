@@ -44,13 +44,14 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
   image         String?
   accounts      Account[]
   sessions      Session[]
+  profile       Watchlist?
 
   @@map("users")
 }
@@ -77,11 +78,19 @@ model Stock {
   earningsStart    DateTime? //the range of when earnings will be announced
   earningsEnd      DateTime? //the range of when earnings will be announced
   dividendDate     DateTime? //if stock pays dividends
-  marketCap        BigInt  
+  marketCap        BigInt
   priceEOD         Float //end of day price
   volumeEOD        Int //end of day volume 
 
   calculateParams CalculateParams[]
+  watchlists      Watchlist[]
+}
+
+model Watchlist {
+  id     String  @id @default(cuid())
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @unique
+  stocks Stock[]
 }
 
 model CalculateParams {
@@ -102,4 +111,3 @@ model CalculateParams {
 
   stock Stock @relation(fields: [stockId], references: [id], onDelete: Cascade) // relation to Stock
 }
-
