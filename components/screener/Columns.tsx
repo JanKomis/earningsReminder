@@ -1,11 +1,13 @@
 "use client";
 import { BookmarkIcon } from "@radix-ui/react-icons";
+import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 import { Stock } from "@/lib/types";
 import { ColumnDef } from "@tanstack/react-table";
 import SortingButton from "./SortingButton";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { manageWatchlist } from "@/lib/actions";
 
 export const columns: ColumnDef<Stock>[] = [
   {
@@ -34,15 +36,40 @@ export const columns: ColumnDef<Stock>[] = [
   {
     accessorKey: "ticker",
     header: ({ column }) => <SortingButton column={column} label="Ticker" />,
+    cell: ({ getValue }) => {
+      const value = getValue();
+      return (
+        <Button variant="link" onClick={() => console.log(value)}>
+          {value}
+        </Button>
+      );
+    },
     groups: [],
   },
   {
     accessorKey: "watchlist",
     header: ({ column }) => <SortingButton column={column} label="Watchlist" />,
     cell: ({ row }) => {
+      const params = row.original;
+      console.log(params);
+      const aaa = "hovno vole";
+
+      const handleClick = async () => {
+        console.log(params);
+        await manageWatchlist(
+          params.id,
+          params.watchlist.watchlistId,
+          params.watchlist.watchlist
+        );
+      };
+
       return (
-        <Button variant="outline" size="icon">
-          <BookmarkIcon className="h-4 w-4" />
+        <Button variant="outline" size="icon" onClick={handleClick}>
+          {params.watchlist.watchlist ? (
+            <BookmarkFilledIcon className="h-4 w-4" />
+          ) : (
+            <BookmarkIcon className="h-4 w-4" />
+          )}
         </Button>
       );
     },
