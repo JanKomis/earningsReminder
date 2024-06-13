@@ -146,6 +146,7 @@ export async function createWatchlist(userId) {
   }
 }
 
+/*
 export async function updateWatchlist(watchlistId, stockId, isInWatchlist) {
   try {
     const watchlist = await prisma.watchlist.update({
@@ -156,6 +157,42 @@ export async function updateWatchlist(watchlistId, stockId, isInWatchlist) {
           ? { disconnect: { id: stockId } }
           : { connect: { id: stockId } },
       },
+      include: { stocks: true },
+    });
+
+    return watchlist;
+  } catch (error) {
+    console.error("Error updating watchlist:", error);
+    throw error;
+  }
+}
+*/
+export async function updateWatchlist(
+  watchlistId,
+  stockId,
+  isInWatchlist,
+  check = null
+) {
+  try {
+    let updateData;
+
+    if (check !== null) {
+      updateData = {
+        stocks: check
+          ? { connect: { id: stockId } }
+          : { disconnect: { id: stockId } },
+      };
+    } else {
+      updateData = {
+        stocks: isInWatchlist
+          ? { disconnect: { id: stockId } }
+          : { connect: { id: stockId } },
+      };
+    }
+
+    const watchlist = await prisma.watchlist.update({
+      where: { id: watchlistId },
+      data: updateData,
       include: { stocks: true },
     });
 

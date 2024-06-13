@@ -51,16 +51,9 @@ export const columns: ColumnDef<Stock>[] = [
     header: ({ column }) => <SortingButton column={column} label="Watchlist" />,
     cell: ({ row }) => {
       const params = row.original;
-      console.log(params);
-      const aaa = "hovno vole";
 
       const handleClick = async () => {
-        console.log(params);
-        await manageWatchlist(
-          params.id,
-          params.watchlist.watchlistId,
-          params.watchlist.watchlist
-        );
+        await manageWatchlist({ data: [params] });
       };
 
       return (

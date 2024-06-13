@@ -4,6 +4,7 @@ import { DataTableViewOptions } from "./DataTableViewOptions";
 import { Input } from "../ui/input";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { manageWatchlist } from "@/lib/actions";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -14,9 +15,42 @@ export function DataTableToolbar<TData>({
   children,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const aaa = table.getState().rowSelection;
+  const bbb = table;
+
+  const ResetSelectRow = () => {
+    table.options.onRowSelectionChange({});
+  };
+
+  const handleAddAllWatchlist = () => {
+    const selectedRows = table.getState().rowSelection;
+    const data = table.options.data;
+
+    const selectedData = Object.keys(selectedRows)
+      .filter((key) => selectedRows[key])
+      .map((key) => data[key]);
+
+    manageWatchlist({ data: selectedData, check: true });
+  };
+
+  const handleRemoveAllWatchlist = () => {
+    const selectedRows = table.getState().rowSelection;
+    const data = table.options.data;
+
+    const selectedData = Object.keys(selectedRows)
+      .filter((key) => selectedRows[key])
+      .map((key) => data[key]);
+
+    manageWatchlist({ data: selectedData, check: false });
+  };
+
 
   return (
     <div>
+      <Button onClick={handleAddAllWatchlist}>Add to watchlist</Button>
+      <Button onClick={handleRemoveAllWatchlist}>Remove from watchlist</Button>
+      <Button onClick={ResetSelectRow}>Reset</Button>
+
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="basic">Basic information</TabsTrigger>
@@ -53,27 +87,3 @@ export function DataTableToolbar<TData>({
     </div>
   );
 }
-
-/*
-
-<div className="flex items-center py-4">
-        <Input
-          placeholder="Filter tickers..."
-          value={(table.getColumn("ticker")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("ticker")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"></Input>
-          {isFiltered && (
-            <Button
-              variant="ghost"
-              onClick={() => table.resetColumnFilters()}
-              className="h-8 px-2 lg:px-3"
-            >
-              Reset
-              <Cross2Icon className="ml-2 h-4 w-4" />
-            </Button>
-          )}
-        />
-        <DataTableViewOptions table={table}></DataTableViewOptions>
-      </div>*/

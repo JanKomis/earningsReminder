@@ -1,11 +1,7 @@
 import { columns } from "@/components/screener/Columns";
 import { DataTable } from "@/components/screener/DataTable";
-import ButtonTest from "@/components/screener/ButtonTest";
-
 import { getUserScreenerData } from "@/lib/query";
 import { auth } from "@/auth";
-
-//import { columns } from "@/components/screener/columns";
 
 export default async function Page() {
   const session = await auth();
@@ -18,7 +14,6 @@ export default async function Page() {
       </header>
       <main>
         <DataTable columns={columns} data={data3} />
-        <ButtonTest />
       </main>
     </>
   );
