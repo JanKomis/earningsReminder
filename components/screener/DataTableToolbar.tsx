@@ -15,11 +15,10 @@ export function DataTableToolbar<TData>({
   children,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  const aaa = table.getState().rowSelection;
-  const bbb = table;
+  const isSelected = table.getIsSomeRowsSelected();
 
   const ResetSelectRow = () => {
-    table.options.onRowSelectionChange({});
+    table.resetRowSelection();
   };
 
   const handleAddAllWatchlist = () => {
@@ -44,13 +43,8 @@ export function DataTableToolbar<TData>({
     manageWatchlist({ data: selectedData, check: false });
   };
 
-
   return (
     <div>
-      <Button onClick={handleAddAllWatchlist}>Add to watchlist</Button>
-      <Button onClick={handleRemoveAllWatchlist}>Remove from watchlist</Button>
-      <Button onClick={ResetSelectRow}>Reset</Button>
-
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="basic">Basic information</TabsTrigger>
@@ -65,7 +59,7 @@ export function DataTableToolbar<TData>({
           Change your password here.
         </TabsContent>
       </Tabs>
-      <div className="flex items-center py-2 ">
+      <div className="flex items-center py-2 gap-4">
         <Input
           placeholder="Filter tickers..."
           value={(table.getColumn("ticker")?.getFilterValue() as string) ?? ""}
@@ -74,6 +68,19 @@ export function DataTableToolbar<TData>({
           }
           className="max-w-sm"
         ></Input>
+        {isSelected && (
+          <>
+            <Button variant="ghost" onClick={handleAddAllWatchlist}>
+              Add to watchlist
+            </Button>
+            <Button variant="ghost" onClick={handleRemoveAllWatchlist}>
+              Remove from watchlist
+            </Button>
+            <Button variant="ghost" onClick={ResetSelectRow}>
+              Reset
+            </Button>
+          </>
+        )}
         {isFiltered && (
           <Button variant="ghost" onClick={() => table.resetColumnFilters()}>
             Reset
