@@ -1,10 +1,14 @@
+import EventContainer from "@/components/overview/EventContainer";
+
 export default function Page() {
   return (
     <>
       <header>
         <h1>Stock overview</h1>
       </header>
-      <main>Welcome to dashboard!</main>
+      <main>
+        <EventContainer></EventContainer>
+      </main>
     </>
   );
 }
