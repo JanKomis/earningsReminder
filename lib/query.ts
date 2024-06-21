@@ -99,9 +99,61 @@ function mergeDataWithWatchlist(stockData, watchlist) {
   });
 }
 
+export async function getEventStocks(startDate, endDate, event) {
+  try {
+    let dateField;
+
+    if (event === "earnings") {
+      dateField = "earningsDate";
+    } else if (event === "dividends") {
+      dateField = "dividendDate";
+    } else {
+      throw new Error("Invalid event type. Must be 'earnings' or 'dividends'.");
+    }
+
+    const stocks = await prisma.stock.findMany({
+      where: {
+        [dateField]: {
+          gte: new Date(startDate),
+          lte: new Date(endDate),
+        },
+      },
+    });
+
+    return stocks;
+  } catch (error) {
+    console.error(error);
+    throw error; // rethrow error to handle it further up the call stack if necessary
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+export async function getUserEventData(
+  email: string,
+  startDate,
+  endDate,
+  event
+) {
+  try {
+    const userId = await getUserIdByEmail(email);
+    if (!userId) {
+      throw new Error("User not found");
+    }
+
+    const stocks = await getEventStocks(startDate, endDate, event);
+    const watchlist = await getWatchlist(userId);
+    const mergedData = mergeDataWithWatchlist(stocks, watchlist);
+
+    return mergedData;
+  } catch (error) {
+    console.error("Error in getUserEventData:", error);
+    return [];
+  }
+}
+
 export async function getUserScreenerData(email: string) {
   try {
-    // 1. Get user ID by email
     const userId = await getUserIdByEmail(email);
     if (!userId) {
       throw new Error("User not found");
@@ -109,6 +161,7 @@ export async function getUserScreenerData(email: string) {
 
     const allStocks = await getAllStock();
     const watchlist = await getWatchlist("clwx6nete0000gf7311ypw9uh");
+    //const watchlist = await getWatchlist(email);
     const mergedData = mergeDataWithWatchlist(allStocks, watchlist);
     return mergedData;
   } catch (error) {
@@ -146,27 +199,6 @@ export async function createWatchlist(userId) {
   }
 }
 
-/*
-export async function updateWatchlist(watchlistId, stockId, isInWatchlist) {
-  try {
-    const watchlist = await prisma.watchlist.update({
-      where: { id: watchlistId },
-      data: {
-        stocks: isInWatchlist
-        
-          ? { disconnect: { id: stockId } }
-          : { connect: { id: stockId } },
-      },
-      include: { stocks: true },
-    });
-
-    return watchlist;
-  } catch (error) {
-    console.error("Error updating watchlist:", error);
-    throw error;
-  }
-}
-*/
 export async function updateWatchlist(
   watchlistId,
   stockId,

@@ -12,7 +12,6 @@ interface DataTableToolbarProps<TData> {
 
 export function DataTableToolbar<TData>({
   table,
-  children,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const isSelected = table.getIsSomeRowsSelected();

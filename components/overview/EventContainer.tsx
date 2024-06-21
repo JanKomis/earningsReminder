@@ -1,7 +1,13 @@
 "use client";
-
 import { useReducer } from "react";
 import DateSwitcher from "./DateSwitcher";
+import useSWR from "swr";
+import { EventDataTable } from "./EventDataTable";
+//import { columns } from "./EventTableColumns";
+import CustomBarChart from "./Chart";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Separator } from "../ui/separator";
+import { getColumns } from "./EventTableColumns";
 
 // Pomocná funkce pro získání pondělí aktuálního týdne
 const getMonday = (date) => {
@@ -61,13 +67,56 @@ const reducer = (state, action) => {
   throw Error("Unknown action: " + action.type);
 };
 
-export default function EventContainer() {
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+const formatDate = (date) => {
+  return date.toISOString().split("T")[0];
+};
+
+export default function EventContainer({ eventName }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { data, error, mutate } = useSWR(
+    `/api/stocks/events?startDate=${state.startWeek}Z&endDate=${state.endWeek}Z&event=${eventName}`,
+    fetcher
+  );
+
+  const title = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
+  const columns = getColumns(eventName);
+
+  if (!data) return <div>loading...</div>;
+
   return (
-    <div>
-      <div>
-        <DateSwitcher state={state} dispatch={dispatch} options={options}></DateSwitcher>
-      </div>
-    </div>
+    <>
+      <Card>
+        <CardHeader>
+          <div className="flex flex-row">
+            <div className="flex flex-col basis-2/3">
+              <CardTitle>{title(eventName)}</CardTitle>
+              <span>
+                {formatDate(state.startWeek)} - {formatDate(state.endWeek)}
+              </span>
+            </div>
+            <div className="basis-1/3">
+              <DateSwitcher
+                state={state}
+                dispatch={dispatch}
+                options={options}
+              />
+            </div>
+          </div>
+          <Separator className="my-2" />
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[380px]">
+            <div className="w-8/12">
+              <EventDataTable columns={columns} data={data.data} />
+            </div>
+            <CustomBarChart data={data.data} />
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 }

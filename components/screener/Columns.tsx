@@ -79,6 +79,11 @@ export const columns: ColumnDef<Stock>[] = [
     groups: ["basic"],
   },
   {
+    accessorKey: "dividendDate",
+    header: ({ column }) => <SortingButton column={column} label="Dividend" />,
+    groups: ["basic"],
+  },
+  {
     accessorKey: "marketCap",
     header: ({ column }) => (
       <SortingButton column={column} label="Market cap" />
