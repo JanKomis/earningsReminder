@@ -6,9 +6,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  LabelList,
   ResponsiveContainer,
-  Area,
 } from "recharts";
 
 const processData = (data) => {

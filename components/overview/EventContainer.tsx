@@ -3,7 +3,6 @@ import { useReducer } from "react";
 import DateSwitcher from "./DateSwitcher";
 import useSWR from "swr";
 import { EventDataTable } from "./EventDataTable";
-//import { columns } from "./EventTableColumns";
 import CustomBarChart from "./Chart";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";

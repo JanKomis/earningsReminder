@@ -6,15 +6,8 @@ import {
 } from "@radix-ui/react-icons";
 
 import { Table } from "@tanstack/react-table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 import { Button } from "../ui/button";
-import { ArrowUpDown } from "lucide-react";
+
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
