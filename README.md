@@ -16,6 +16,8 @@
 <li>Commit changes in the MVP gate to main and deployment to Vercel</li>
 <li>Set up a daily download of new data to the database along with the zod library for realtime validation.</li>
 <li>Set up SendGrid platform to send emails.</li>
+<li>Add placeholder while content is loading.</li>
+<li>Optimalization speed (etc. add watchlist)</li>
 <li>Set up responsiveness</li>
 
 # Build With
