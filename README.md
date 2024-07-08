@@ -30,7 +30,11 @@
 <a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png" width="36" height="36" alt="Typescript" /></a>
 <a href="https://supabase.com" target="black" rel="noreferrer"><img src="https://miro.medium.com/v2/resize:fit:1400/0*QzPzYLTNRX7p5Rsl" width="36" height="36" alt="Supabase" /></a>
 <a href="https://www.prisma.io" target="black" rel="noreferrer"><img src="https://static-00.iconduck.com/assets.00/file-type-prisma-icon-1682x2048-yybmypz0.png" width="36" height="36" alt="Prisma Io" /></a>
-<a href="https://www.prisma.io" target="black" rel="noreferrer"><img src="https://avatars.githubusercontent.com/u/67470890?s=280&v=4" width="36" height="36" alt="Prisma Io" /></a>
+<a href="https://authjs.dev" target="black" rel="noreferrer"><img src="https://avatars.githubusercontent.com/u/67470890?s=280&v=4" width="36" height="36" alt="Prisma Io" /></a>
+<a href="https://ui.shadcn.com" target="black" rel="noreferrer"><img src="https://avatars.githubusercontent.com/u/139895814?s=200&v=4" width="36" height="36" alt="Shadcn" /></a>
+
+
+
 
 
 </p>
